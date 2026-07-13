@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Profile | DeskApp</title>
+    <link rel="shortcut icon" href="/adminkit/img/icons/icon-48x48.png" />
+    <link href="/adminkit/css/app.css" rel="stylesheet">
+    <link href="/css/custom.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper">
+        <nav id="sidebar" class="sidebar js-sidebar">
+            <%- include('partials/adminSidebar', { activePage: 'profile', layout: 'adminkit' }) %>
+        </nav>
+
+        <div class="main">
+            <%- include('partials/adminHeader', { pageTitle: 'Profile', pageSubtitle: 'Manage your admin profile details.', actionButton: { href: '/dashboard', label: 'Dashboard' } }) %>
+
+            <main class="content">
+                <div class="container-fluid p-0">
+                    <div class="d-flex justify-content-between align-items-center mb-4 page-heading-row">
+                        <div>
+                            <h1 class="adminkit-title mb-1"><strong>Profile</strong></h1>
+                            <p class="text-muted mb-0">Manage your admin profile details.</p>
+                        </div>
+                        <a href="/dashboard" class="btn btn-light">Dashboard</a>
+                    </div>
+
+            <% const profilePhoto = currentUser && currentUser.profileImage ? currentUser.profileImage : '/img/download.png'; %>
+            <% const hasSocial = currentUser && (currentUser.facebook || currentUser.instagram || currentUser.linkedin || currentUser.github); %>
+
+            <div class="profile-page-wrap mt-4">
+                <% if (success) { %><div class="success-box alert-dismissible-custom"><span><%= success %></span><button type="button" class="msg-close-btn" aria-label="Close message">×</button></div><% } %>
+                <% if (error) { %><div class="error-box alert-dismissible-custom"><span><%= error %></span><button type="button" class="msg-close-btn" aria-label="Close message">×</button></div><% } %>
+
+                <div class="profile-cover-card">
+                    <div class="profile-cover-bg"></div>
+                    <div class="profile-main-info">
+                        <div class="profile-main-avatar">
+                            <img src="<%= profilePhoto %>" alt="profile" />
+                        </div>
+                        <div class="profile-main-text">
+                            <span class="profile-meta">Admin User</span>
+                            <h3><%= currentUser && currentUser.name ? currentUser.name : 'Admin' %></h3>
+                            <p><%= currentUser && currentUser.email ? currentUser.email : '' %></p>
+                        </div>
+                        <div class="profile-main-actions">
+                            <button type="button" class="btn btn-light" id="openProfileModal">Edit Profile</button>
+                            <a href="/change-password" class="btn btn-outline-light">Change Password</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-lg-8 mb-4">
+                        <div class="profile-info-panel">
+                            <div class="profile-section-title">
+                                <h5>Personal Details</h5>
+                                <p>Profile information saved in your account.</p>
+                            </div>
+                            <div class="profile-detail-grid">
+                                <div class="profile-detail-item">
+                                    <span>Name</span>
+                                    <strong><%= currentUser && currentUser.name ? currentUser.name : 'Not Added' %></strong>
+                                </div>
+                                <div class="profile-detail-item">
+                                    <span>Email</span>
+                                    <strong><%= currentUser && currentUser.email ? currentUser.email : 'Not Added' %></strong>
+                                </div>
+                                <div class="profile-detail-item">
+                                    <span>Birth Year</span>
+                                    <strong><%= currentUser && currentUser.birthYear ? currentUser.birthYear : 'Not Added' %></strong>
+                                </div>
+                                <div class="profile-detail-item">
+                                    <span>Gender</span>
+                                    <strong><%= currentUser && currentUser.gender ? currentUser.gender : 'Not Added' %></strong>
+                                </div>
+                                <div class="profile-detail-item">
+                                    <span>Country</span>
+                                    <strong><%= currentUser && currentUser.country ? currentUser.country : 'Not Added' %></strong>
+                                </div>
+                                <div class="profile-detail-item">
+                                    <span>State</span>
+                                    <strong><%= currentUser && currentUser.state ? currentUser.state : 'Not Added' %></strong>
+                                </div>
+                                <div class="profile-detail-item profile-detail-full">
+                                    <span>Address</span>
+                                    <strong><%= currentUser && currentUser.address ? currentUser.address : 'Not Added' %></strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 mb-4">
+                        <div class="profile-info-panel h-100">
+                            <div class="profile-section-title">
+                                <h5>Social Links</h5>
+                                <p>Only added social links are visible.</p>
+                            </div>
+
+                            <% if (hasSocial) { %>
+                                <div class="profile-social-list">
+                                    <% if (currentUser.facebook) { %>
+                                        <a href="<%= currentUser.facebook %>" target="_blank" rel="noopener" class="profile-social-icon">f</a>
+                                    <% } %>
+                                    <% if (currentUser.instagram) { %>
+                                        <a href="<%= currentUser.instagram %>" target="_blank" rel="noopener" class="profile-social-icon">◎</a>
+                                    <% } %>
+                                    <% if (currentUser.linkedin) { %>
+                                        <a href="<%= currentUser.linkedin %>" target="_blank" rel="noopener" class="profile-social-icon">in</a>
+                                    <% } %>
+                                    <% if (currentUser.github) { %>
+                                        <a href="<%= currentUser.github %>" target="_blank" rel="noopener" class="profile-social-icon">gh</a>
+                                    <% } %>
+                                </div>
+                            <% } else { %>
+                                <div class="empty-box">No social link added.</div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="/adminkit/js/app.js"></script>
+<div class="profile-modal-overlay" id="profileModal">
+        <div class="profile-modal-box">
+            <div class="profile-modal-head">
+                <div>
+                    <h5>Edit Profile</h5>
+                    <p>Update your profile details</p>
+                </div>
+                <button type="button" class="profile-modal-close" id="closeProfileModal">×</button>
+            </div>
+
+            <form action="/profile" method="post" enctype="multipart/form-data" class="profile-modal-form">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" name="name" class="form-control" value="<%= currentUser ? currentUser.name : '' %>" required />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" class="form-control" value="<%= currentUser ? currentUser.email : '' %>" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Birth Year</label>
+                            <input type="number" name="birthYear" class="form-control" value="<%= currentUser && currentUser.birthYear ? currentUser.birthYear : '' %>" placeholder="Enter birth year" min="1900" max="2100" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <select name="gender" class="form-control">
+                                <option value="">Select Gender</option>
+                                <option value="Male" <%= currentUser && currentUser.gender === 'Male' ? 'selected' : '' %>>Male</option>
+                                <option value="Female" <%= currentUser && currentUser.gender === 'Female' ? 'selected' : '' %>>Female</option>
+                                <option value="Other" <%= currentUser && currentUser.gender === 'Other' ? 'selected' : '' %>>Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Country</label>
+                            <input type="text" name="country" class="form-control" value="<%= currentUser && currentUser.country ? currentUser.country : '' %>" placeholder="Enter country" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>State</label>
+                            <input type="text" name="state" class="form-control" value="<%= currentUser && currentUser.state ? currentUser.state : '' %>" placeholder="Enter state" />
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Address</label>
+                            <textarea name="address" class="form-control" rows="3" placeholder="Enter address"><%= currentUser && currentUser.address ? currentUser.address : '' %></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Profile Image</label>
+                            <input type="file" name="profileImage" class="form-control" accept="image/*" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Facebook Link</label>
+                            <input type="url" name="facebook" class="form-control" value="<%= currentUser && currentUser.facebook ? currentUser.facebook : '' %>" placeholder="https://facebook.com/username" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Instagram Link</label>
+                            <input type="url" name="instagram" class="form-control" value="<%= currentUser && currentUser.instagram ? currentUser.instagram : '' %>" placeholder="https://instagram.com/username" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>LinkedIn Link</label>
+                            <input type="url" name="linkedin" class="form-control" value="<%= currentUser && currentUser.linkedin ? currentUser.linkedin : '' %>" placeholder="https://linkedin.com/in/username" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>GitHub Link</label>
+                            <input type="url" name="github" class="form-control" value="<%= currentUser && currentUser.github ? currentUser.github : '' %>" placeholder="https://github.com/username" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-modal-footer">
+                    <button type="button" class="btn btn-outline-light" id="cancelProfileModal">Cancel</button>
+                    <button type="submit" class="btn btn-light">Save Profile</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const profileModal = document.getElementById("profileModal");
+        const openProfileModal = document.getElementById("openProfileModal");
+        const closeProfileModal = document.getElementById("closeProfileModal");
+        const cancelProfileModal = document.getElementById("cancelProfileModal");
+
+        const openModal = () => profileModal.classList.add("show");
+        const closeModal = () => profileModal.classList.remove("show");
+
+        if (openProfileModal) openProfileModal.addEventListener("click", openModal);
+        if (closeProfileModal) closeProfileModal.addEventListener("click", closeModal);
+        if (cancelProfileModal) cancelProfileModal.addEventListener("click", closeModal);
+
+        profileModal.addEventListener("click", (event) => {
+            if (event.target === profileModal) closeModal();
+        });
+    </script>
+<script src="/js/message-close.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Edit Category | DeskApp</title>
+    <link rel="shortcut icon" href="/adminkit/img/icons/icon-48x48.png" />
+    <link href="/adminkit/css/app.css" rel="stylesheet">
+    <link href="/css/custom.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper">
+        <nav id="sidebar" class="sidebar js-sidebar">
+            <%- include('partials/adminSidebar', { activePage: 'editCategory', layout: 'adminkit' }) %>
+        </nav>
+
+        <div class="main">
+            <%- include('partials/adminHeader', { pageTitle: 'Edit Category', pageSubtitle: 'Update category name.', actionButton: { href: '/categories', label: 'Back To Category' } }) %>
+
+            <main class="content">
+                <div class="container-fluid p-0">
+                    <div class="d-flex justify-content-between align-items-center mb-4 page-heading-row">
+                        <div>
+                            <h1 class="adminkit-title mb-1"><strong>Edit Category</strong></h1>
+                            <p class="text-muted mb-0">Update category name without duplicate entry.</p>
+                        </div>
+                        <a href="/categories" class="btn btn-light">Back To Category</a>
+                    </div>
+
+                    <div class="form-card category-form-card mt-4">
+                        <% if (error) { %>
+                            <div class="error-box alert-dismissible-custom"><span><%= error %></span><button type="button" class="msg-close-btn" aria-label="Close message">×</button></div>
+                        <% } %>
+
+                        <form action="/category/edit/<%= category._id %>" method="post">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label>Category Name</label>
+                                        <input type="text" name="categoryName" class="form-control" value="<%= category.categoryName %>" placeholder="Enter category name" required />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="category-action-row">
+                                <button type="submit" class="btn btn-light"><i data-feather="save" class="me-1"></i> Update Category</button>
+                                <a href="/categories" class="btn btn-outline-light ml-2">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="/adminkit/js/app.js"></script>
+    <script src="/js/message-close.js"></script>
+</body>
+</html>

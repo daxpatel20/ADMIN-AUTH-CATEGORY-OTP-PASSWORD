@@ -1,0 +1,53 @@
+<%
+    const currentActivePage = typeof activePage !== 'undefined' ? activePage : '';
+    const isCategoryOpen = ['addCategory', 'viewCategory', 'editCategory'].includes(currentActivePage);
+%>
+
+<div class="sidebar-content js-simplebar">
+    <a class="sidebar-brand" href="/dashboard">
+        <span class="align-middle">AdminKit</span>
+    </a>
+
+    <ul class="sidebar-nav">
+        <li class="sidebar-header">Pages</li>
+
+        <li class="sidebar-item <%= currentActivePage === 'dashboard' ? 'active' : '' %>">
+            <a class="sidebar-link" href="/dashboard">
+                <i class="align-middle" data-feather="sliders"></i>
+                <span class="align-middle">Dashboard</span>
+            </a>
+        </li>
+
+        <li class="sidebar-item category-sidebar-group <%= isCategoryOpen ? 'active' : '' %>">
+            <a class="sidebar-link category-toggle" data-bs-toggle="collapse" href="#categoryMenu" role="button" aria-expanded="<%= isCategoryOpen ? 'true' : 'false' %>" aria-controls="categoryMenu">
+                <i class="align-middle" data-feather="grid"></i>
+                <span class="align-middle">Category</span>
+                <i class="align-middle ms-auto category-chevron" data-feather="chevron-down"></i>
+            </a>
+
+            <div class="collapse <%= isCategoryOpen ? 'show' : '' %>" id="categoryMenu">
+                <ul class="sidebar-dropdown list-unstyled">
+                    <li class="sidebar-item <%= currentActivePage === 'addCategory' ? 'active' : '' %>">
+                        <a class="sidebar-link category-child-link" href="/category/add">
+                            <span class="category-dot"><%= currentActivePage === 'addCategory' ? '●' : '○' %></span>
+                            <span>Add Category</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item <%= ['viewCategory', 'editCategory'].includes(currentActivePage) ? 'active' : '' %>">
+                        <a class="sidebar-link category-child-link" href="/categories">
+                            <span class="category-dot"><%= ['viewCategory', 'editCategory'].includes(currentActivePage) ? '●' : '○' %></span>
+                            <span>View Category</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <li class="sidebar-item <%= currentActivePage === 'profile' ? 'active' : '' %>">
+            <a class="sidebar-link" href="/profile">
+                <i class="align-middle" data-feather="user"></i>
+                <span class="align-middle">Profile</span>
+            </a>
+        </li>
+    </ul>
+</div>
